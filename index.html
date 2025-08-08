@@ -3,71 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bubble Sort Favorite Foods</title>
+  <title>Interactive Bubble Sort</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 30px;
       max-width: 600px;
     }
-    h1 {
-      color: #2c3e50;
+    textarea {
+      width: 100%;
+      height: 120px;
+      font-size: 16px;
+      padding: 10px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
     }
     pre {
       background: #f0f0f0;
       padding: 15px;
       border-radius: 5px;
-      font-size: 16px;
       white-space: pre-wrap;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    label {
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-  <h1>Bubble Sort: Favorite Foods by Length</h1>
+  <h1>Sort Your List by Length (Bubble Sort)</h1>
 
-  <p>Original List:</p>
-  <pre id="original-list"></pre>
+  <label for="inputList">Enter your items (comma-separated or one per line):</label>
+  <textarea id="inputList" placeholder="e.g. Pizza, Sushi, Burger, Ice Cream"></textarea>
+  
+  <br />
+  <button id="sortBtn">Sort by Length</button>
 
-  <p>Sorted List (by length):</p>
-  <pre id="sorted-list"></pre>
+  <h3>Original List:</h3>
+  <pre id="originalList"></pre>
+
+  <h3>Sorted List (by length):</h3>
+  <pre id="sortedList"></pre>
 
   <script>
-    // Array of favorite foods
-    const favoriteFoods = [
-      "Pizza",
-      "Sushi",
-      "Burger",
-      "Ice Cream",
-      "Pasta",
-      "Tacos",
-      "Donut"
-    ];
-
-    // Display the original list on the page
-    document.getElementById('original-list').textContent = favoriteFoods.join(", ");
-
-    // Bubble sort function to sort by string length
+    // Bubble Sort function to sort strings by length
     function bubbleSortByLength(arr) {
       let n = arr.length;
       for (let i = 0; i < n - 1; i++) {
         for (let j = 0; j < n - 1 - i; j++) {
           if (arr[j].length > arr[j + 1].length) {
-            // Swap items if current item length is greater than next
-            let temp = arr[j];
-            arr[j] = arr[j + 1];
-            arr[j + 1] = temp;
+            [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]; // swap
           }
         }
       }
       return arr;
     }
 
-    // Get sorted array
-    const sortedFoods = bubbleSortByLength([...favoriteFoods]); // copy array to avoid mutation
+    const sortBtn = document.getElementById('sortBtn');
+    const inputList = document.getElementById('inputList');
+    const originalList = document.getElementById('originalList');
+    const sortedList = document.getElementById('sortedList');
 
-    // Display sorted list on the page
-    document.getElementById('sorted-list').textContent = sortedFoods.join(", ");
+    sortBtn.addEventListener('click', () => {
+      let rawText = inputList.value.trim();
+
+      if (!rawText) {
+        alert('Please enter some items to sort!');
+        return;
+      }
+
+      // Split input into an array by commas or new lines
+      let items = rawText.split(/\s*,\s*|\n/).filter(item => item.length > 0);
+
+      originalList.textContent = items.join(", ");
+
+      // Sort by length using bubble sort
+      let sorted = bubbleSortByLength([...items]); // copy to avoid changing original
+
+      sortedList.textContent = sorted.join(", ");
+    });
   </script>
 
 </body>
