@@ -1,37 +1,74 @@
-// Bubble Sort to sort an array of strings by their length (ascending order)
-
-// Array of favorite foods
-const favoriteFoods = [
-  "Pizza",
-  "Sushi",
-  "Burger",
-  "Ice Cream",
-  "Pasta",
-  "Tacos",
-  "Donut"
-];
-
-// Bubble sort function
-function bubbleSortByLength(arr) {
-  let n = arr.length;
-  // Outer loop for passes
-  for (let i = 0; i < n - 1; i++) {
-    // Inner loop for comparing adjacent elements
-    for (let j = 0; j < n - 1 - i; j++) {
-      // Compare length of current and next item
-      if (arr[j].length > arr[j + 1].length) {
-        // Swap if current is longer than next
-        let temp = arr[j];
-        arr[j] = arr[j + 1];
-        arr[j + 1] = temp;
-      }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bubble Sort Favorite Foods</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      max-width: 600px;
     }
-  }
-  return arr;
-}
+    h1 {
+      color: #2c3e50;
+    }
+    pre {
+      background: #f0f0f0;
+      padding: 15px;
+      border-radius: 5px;
+      font-size: 16px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
 
-// Sort favorite foods by length
-const sortedFoods = bubbleSortByLength(favoriteFoods);
+  <h1>Bubble Sort: Favorite Foods by Length</h1>
 
-console.log("Favorite foods sorted by length:");
-console.log(sortedFoods);
+  <p>Original List:</p>
+  <pre id="original-list"></pre>
+
+  <p>Sorted List (by length):</p>
+  <pre id="sorted-list"></pre>
+
+  <script>
+    // Array of favorite foods
+    const favoriteFoods = [
+      "Pizza",
+      "Sushi",
+      "Burger",
+      "Ice Cream",
+      "Pasta",
+      "Tacos",
+      "Donut"
+    ];
+
+    // Display the original list on the page
+    document.getElementById('original-list').textContent = favoriteFoods.join(", ");
+
+    // Bubble sort function to sort by string length
+    function bubbleSortByLength(arr) {
+      let n = arr.length;
+      for (let i = 0; i < n - 1; i++) {
+        for (let j = 0; j < n - 1 - i; j++) {
+          if (arr[j].length > arr[j + 1].length) {
+            // Swap items if current item length is greater than next
+            let temp = arr[j];
+            arr[j] = arr[j + 1];
+            arr[j + 1] = temp;
+          }
+        }
+      }
+      return arr;
+    }
+
+    // Get sorted array
+    const sortedFoods = bubbleSortByLength([...favoriteFoods]); // copy array to avoid mutation
+
+    // Display sorted list on the page
+    document.getElementById('sorted-list').textContent = sortedFoods.join(", ");
+  </script>
+
+</body>
+</html>
